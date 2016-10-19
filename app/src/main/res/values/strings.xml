@@ -50,6 +50,9 @@
     <!-- Text hint for quantity field in the editor [CHAR LIMIT=30] -->
     <string name="hint_movie_qty">Enter quantity</string>
 
+    <!-- Text hint for quantity field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_movie_sale">Sale quantity </string>
+
     <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
     <string name="hint_movie_price">Price</string>
 

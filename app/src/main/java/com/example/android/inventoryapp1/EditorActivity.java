@@ -71,6 +71,8 @@ public class EditorActivity extends AppCompatActivity implements
         }
     };
 
+    private EditText mSoldEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +98,7 @@ public class EditorActivity extends AppCompatActivity implements
 
         mTextView = (TextView) findViewById(R.id.image_uri);
         mImageView = (ImageView) findViewById(R.id.image);
+        mSoldEditText = (EditText) findViewById(R.id.edit_sale_movie);
 
         mNameEditText.setOnTouchListener(mTouchListener);
         mDescriptionEditText.setOnTouchListener(mTouchListener);
@@ -210,7 +213,7 @@ public class EditorActivity extends AppCompatActivity implements
         {
             return;
         }
-        String soldString = mQuantityEditText.getText().toString().trim();//NEW
+        String soldString = mSoldEditText.getText().toString().trim();//NEW
 
         // Create a ContentValues object where column names are the keys,
         // and movie attributes from the editor are the values.
@@ -232,6 +235,7 @@ public class EditorActivity extends AppCompatActivity implements
             quantity = Integer.parseInt(quantityString);
         }
         values.put(InventoryEntry.COLUMN_MOVIE_QTY, quantity);
+        values.put(InventoryEntry.COLUMN_SOLD, soldString);
 
         // Determine if this is a new or existing pet by checking if mCurrentMovieUri is null or not
         if (mCurrentMovieUri == null) {
@@ -263,7 +267,7 @@ public class EditorActivity extends AppCompatActivity implements
             }
         }
 
-        values.put(InventoryEntry.COLUMN_SOLD, soldString);
+
     }
 
     @Override
@@ -413,8 +417,7 @@ public class EditorActivity extends AppCompatActivity implements
                     mRatingSpinner.setSelection(0);
                     break;
             }
-            //sold.setText(Integer.toString(sold));
-
+            mSoldEditText.setText(Integer.toString(sold));
         }
     }
     @Override
@@ -425,6 +428,7 @@ public class EditorActivity extends AppCompatActivity implements
         mQuantityEditText.setText("");
         mPriceEditText.setText("");
         mRatingSpinner.setSelection(0);
+        mSoldEditText.setText("");
     }
     private void showUnsavedChangesDialog(
             DialogInterface.OnClickListener discardButtonClickListener) {
@@ -460,7 +464,6 @@ public class EditorActivity extends AppCompatActivity implements
                 }
             }
         });
-        // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
@@ -473,11 +476,9 @@ public class EditorActivity extends AppCompatActivity implements
         if (mCurrentMovieUri != null) {
             int rowsDeleted = getContentResolver().delete(mCurrentMovieUri, null, null);
             if (rowsDeleted == 0) {
-                // If no rows were deleted, then there was an error with the delete.
                 Toast.makeText(this, getString(R.string.editor_delete_pet_failed),
                         Toast.LENGTH_SHORT).show();
             } else {
-                // Otherwise, the delete was successful and we can display a toast.
                 Toast.makeText(this, getString(R.string.editor_delete_pet_successful),
                         Toast.LENGTH_SHORT).show();
             }
@@ -485,9 +486,6 @@ public class EditorActivity extends AppCompatActivity implements
         finish();
     }
 
-    /**
-     * This method is called when the order button is clicked.
-     */
     public void submitOrder(View view) {
         EditText nameField = (EditText)findViewById(R.id.edit_movie_name);
         String name = nameField.getText().toString();

@@ -71,9 +71,9 @@ public class InventoryCursorAdapter extends CursorAdapter{
         soldButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (quantityColumnIndex > 1) {
+                if (quantityColumn > 1) {
                     ContentValues values = new ContentValues();
-                    values.put(InventoryEntry.COLUMN_MOVIE_QTY, quantityColumnIndex);
+                    values.put(InventoryEntry.COLUMN_MOVIE_QTY, quantityColumn);
                     Uri mCurrentInventoryUri = ContentUris.withAppendedId(InventoryEntry.CONTENT_URI, rowId);
                     int rowsAffected = context.getContentResolver().update(mCurrentInventoryUri, values, null, null);
 
